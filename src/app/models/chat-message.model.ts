@@ -2,14 +2,16 @@ import { Observable } from "rxjs";
 
 export class ChatMessage {
     email? : string;
-    userName? : Observable<string>;
+    // userName? : Observable<string>;
+    userName? : string;
     message? : string;
     timeSent? : string; //Date = new Date();
     $key? : string;
 
     constructor(
         email? : string,
-        userName? : Observable<string>,
+        // userName? : Observable<string>,
+        userName? : string,
         message? : string,
         timeSent? : string, // Date
         $key? : string,

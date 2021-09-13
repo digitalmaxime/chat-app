@@ -11,7 +11,7 @@ export class ChatFormComponent implements OnInit {
   message : string;
 
   constructor(private chatService : ChatService) { 
-    this.message = 'allo'
+    this.message = ''
   }
 
   ngOnInit(): void {
@@ -25,6 +25,7 @@ export class ChatFormComponent implements OnInit {
 
   send(): void {
     this.chatService.sendMessage(this.message);
+    this.message = "";
   }
 
 }
