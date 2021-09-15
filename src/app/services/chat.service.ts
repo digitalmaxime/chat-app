@@ -66,6 +66,7 @@ export class ChatService {
       userName: this.userName,
       email: email,
     });
+    console.log('message push');
   }
 
   getTimeStamp() {
