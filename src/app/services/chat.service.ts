@@ -16,19 +16,33 @@ export class ChatService {
   chatMessages: AngularFireList<ChatMessage>;
   randomData: AngularFireList<Number>;
   chatMessage: ChatMessage;
-  user: any;
+  user: firebase.User;
   userName: string;
-  // userName: string;
 
   constructor(
     private db: AngularFireDatabase,
     private afAuth: AngularFireAuth,
   ) { 
     this.afAuth.authState.subscribe(auth => {
-      // if (auth !== undefined && auth !== null) {
-      //   this.user = auth;
-      // }
+      if (auth !== undefined && auth !== null) {
+        this.user = auth;
+      }
+
+      this.getUser().valueChanges().subscribe((a: any) => {
+        this.userName = a.displayName;
+      });
     });
+  }
+
+  getUser() {
+    const userId = this.user.uid;
+    const path = `/users/${userId}`;
+    return this.db.object(path);
+  }
+
+  getUsers() {
+    const path = '/users';
+    return this.db.list(path);
   }
 
   // ngOnInit() {
@@ -43,16 +57,13 @@ export class ChatService {
   // }
 
   sendMessage(msg: string) {
-    console.log('Called sendMessage() with param ' + msg);
     const timestamp = this.getTimeStamp();
-    // const email = this.user.email;
-    const email = 'test@email.com';
+    const email = this.user.email;
     this.chatMessages = this.getMessages();
-    // this.chatMessages.push(new ChatMessage(email, /*this.userName*/'test-name', msg, timestamp));
     this.chatMessages.push({
       message: msg,
       timeSent: timestamp,
-      userName: 'fake name',
+      userName: this.userName,
       email: email,
     });
   }
