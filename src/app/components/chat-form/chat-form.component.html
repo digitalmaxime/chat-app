@@ -1,8 +1,6 @@
-<form action="">
-    <input 
-        [(ngModel)]="message"
-        (keydown)="handleSubmit($event)"
-        type="text" name="chatInput" class="chatInput">
-    
-    <button class="chatButton" (click)=send()>Send</button>
-</form>
+<input 
+    [(ngModel)]="message"
+    (keyup)="handleSubmit($event)"
+    type="text" name="chatInput" class="chatInput">
+
+<button class="chatButton" (click)="send()">Send</button>

@@ -36,6 +36,7 @@ export class AuthService {
   }
 
   logout() {
+    this.setUserStatus('offline');
     this.afAuth.signOut();
     this.router.navigate(['login']);
   }
@@ -53,7 +54,7 @@ export class AuthService {
     const path = `users/${this.currentUserId}`;
     const data = {
       email: email,
-      displayName: displayName,
+      userName: displayName,
       status: status
     };
     this.db.object(path).update(data)

@@ -7,6 +7,5 @@ import { User } from 'src/app/models/user-model.model';
   styleUrls: ['./user-item.component.css']
 })
 export class UserItemComponent {
-  @Input() user: User;
-
+  @Input() user;
 }
