@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ChatService } from '../../services/chat.service';
 
 @Component({
@@ -6,15 +6,11 @@ import { ChatService } from '../../services/chat.service';
   templateUrl: './chat-form.component.html',
   styleUrls: ['./chat-form.component.css']
 })
-export class ChatFormComponent implements OnInit {
-
+export class ChatFormComponent {
   message : string;
 
   constructor(private chatService : ChatService) { 
     this.message = ''
-  }
-
-  ngOnInit(): void {
   }
   
   handleSubmit(e: KeyboardEvent) {
@@ -25,7 +21,7 @@ export class ChatFormComponent implements OnInit {
 
   send(): void {
     this.chatService.sendMessage(this.message);
-    this.message = "";
+    this.message = '';
   }
 
 }

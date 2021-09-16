@@ -5,8 +5,6 @@ import * as firebase from 'firebase';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
-import { User } from '../models/user-model.model';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -29,11 +27,17 @@ export class AuthService {
   
   login(email: string, password: string) {
     return this.afAuth.signInWithEmailAndPassword(email, password)
-      .then(resolve => {
+      .then((user) => {
+        this.authState = user.user;
         const status = 'online';
         this.setUserStatus(status);
-        this.router.navigate(['/chat']);
+        this.router.navigate(['chat']);
       })
+  }
+
+  logout() {
+    this.afAuth.signOut();
+    this.router.navigate(['login']);
   }
 
   signUp(email: string, password: string, displayName: string) {
@@ -61,5 +65,8 @@ export class AuthService {
     const data = {
       status: status
     };
+
+    this.db.object(path).update(data)
+      .catch(error => console.log(error));
   }
 }

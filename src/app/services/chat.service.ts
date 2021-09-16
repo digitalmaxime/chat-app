@@ -14,7 +14,6 @@ import { ChatMessage } from '../models/chat-message.model';
 })
 export class ChatService {
   chatMessages: AngularFireList<ChatMessage>;
-  randomData: AngularFireList<Number>;
   chatMessage: ChatMessage;
   user: firebase.User;
   userName: string;
@@ -45,17 +44,6 @@ export class ChatService {
     return this.db.list(path);
   }
 
-  // ngOnInit() {
-  //   this.userName.subscribe(
-  //     val => { 
-  //       console.log('received value from subscribe : ' + val);
-  //       this.nameValue = val;
-  //     },
-  //     error => { console.log('error : ' + error) },
-  //     () => { console.log('Completed!')}
-  //   )
-  // }
-
   sendMessage(msg: string) {
     const timestamp = this.getTimeStamp();
     const email = this.user.email;
@@ -66,7 +54,6 @@ export class ChatService {
       userName: this.userName,
       email: email,
     });
-    console.log('message push');
   }
 
   getTimeStamp() {

@@ -25,3 +25,7 @@
     transition: 0.2s ease-out;
     width: 20%;
 }
+
+.chatButton:hover{
+    background-color: #444;
+}
