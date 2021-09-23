@@ -15,9 +15,13 @@ export class AuthService {
 
   constructor(private afAuth: AngularFireAuth, private db: AngularFireDatabase, private router: Router) {
     this.user = afAuth.authState;
+    this.authState = this.user;
+    console.log(this.user);
+    console.log(this.authState);
    }
   
   get currentUserId(): string {
+    console.log(this.authState);
     return this.authState !== null ? this.authState.uid : '';
   }
 
@@ -45,6 +49,8 @@ export class AuthService {
     return this.afAuth.createUserWithEmailAndPassword(email, password)
       .then(user => {
         this.authState = user.user; //DIFFERENCE AVEC LE TUTORIEL
+        console.log(user);
+        console.log(this.authState);
         const status = 'online';
         this.setUserData(email, displayName, status);
       }).catch(error => console.log(error));
@@ -67,7 +73,8 @@ export class AuthService {
       status: status
     };
 
-    this.db.object(path).update(data)
+    let db = firebase.database();
+    db.ref(path).update(data)
       .catch(error => console.log(error));
   }
 }

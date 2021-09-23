@@ -2,7 +2,7 @@
     flex: 10;
     font-size: 1.3em;
     font-family: 'Open Sans', sans-serif;
-    background-color: rgb(199, 146, 146);
+    background-color: rgb(212, 212, 212);
     color: #000;
     transition: 0.1s ease-out;
     padding-left: 80px;
@@ -25,7 +25,6 @@
     transition: 0.2s ease-out;
     width: 20%;
 }
-
 .chatButton:hover{
     background-color: #444;
 }

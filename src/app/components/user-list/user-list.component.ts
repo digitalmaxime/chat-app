@@ -12,6 +12,7 @@ export class UserListComponent {
   
   constructor(chatService: ChatService) { 
     chatService.getUsers().valueChanges().subscribe(users => {
+      console.log(users);
       this.users = users;
     });
   }

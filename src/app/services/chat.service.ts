@@ -23,25 +23,29 @@ export class ChatService {
     private afAuth: AngularFireAuth,
   ) { 
     this.afAuth.authState.subscribe(auth => {
+      console.log(auth);
       if (auth !== undefined && auth !== null) {
         this.user = auth;
-        this.userName = auth.displayName;
       }
 
       this.getUser().valueChanges().subscribe((a: any) => {
-        this.userName = a.displayName;
+        console.log(a);
+        this.userName = a.userName;
       });
     });
   }
 
   getUser() {
     const userId = this.user.uid;
+    console.log(userId);
     const path = `/users/${userId}`;
+    console.log(this.db.object(path));
     return this.db.object(path);
   }
 
   getUsers() {
     const path = '/users';
+    console.log(this.db.list(path));
     return this.db.list(path);
   }
 
