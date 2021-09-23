@@ -3,16 +3,16 @@
     <div id="heading"><a routerLink="/" routerLinkActive="active">Colorimage - Chat</a></div>
   <div class="links">
     <span>
-      <a *ngIf="!(user|async)?.uid" routerLink="/login" (click)="login()">Login</a>
+      <a *ngIf="(!(user|async)?.uid) && showLogin" routerLink="/login" (click)="login()">Connexion</a>
     </span>
     <span>
-      <a *ngIf="!(user|async)?.uid" routerLink="/signup">Sign Up</a>
+      <a *ngIf="!(user|async)?.uid && !showLogin" routerLink="/signup">Inscription</a>
     </span>
     <span>
-      <span id="userEmail" *ngIf="(user|async)?.uid">Hello, {{userEmail}}</span>
+      <span id="userEmail" *ngIf="(user|async)?.uid">Bonjour, {{userEmail}}</span>
     </span>
     <span>
-      <a *ngIf="(user|async)?.uid" routerLink="login" (click)="logout()">Logout</a>
+      <a *ngIf="(user|async)?.uid" routerLink="login" (click)="logout()">Se déconnecter</a>
     </span>
   </div>
 </div>

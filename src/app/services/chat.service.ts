@@ -23,13 +23,11 @@ export class ChatService {
     private afAuth: AngularFireAuth,
   ) { 
     this.afAuth.authState.subscribe(auth => {
-      console.log(auth);
       if (auth !== undefined && auth !== null) {
         this.user = auth;
       }
 
       this.getUser().valueChanges().subscribe((a: any) => {
-        console.log(a);
         this.userName = a.userName;
       });
     });
@@ -37,15 +35,12 @@ export class ChatService {
 
   getUser() {
     const userId = this.user.uid;
-    console.log(userId);
     const path = `/users/${userId}`;
-    console.log(this.db.object(path));
     return this.db.object(path);
   }
 
   getUsers() {
     const path = '/users';
-    console.log(this.db.list(path));
     return this.db.list(path);
   }
 
@@ -68,8 +63,8 @@ export class ChatService {
     (now.getUTCMonth() + 1) + '/' +
     now.getUTCDate();
 
-    const time = now.getUTCHours() + '/' +
-      now.getUTCMinutes() + '/' +
+    const time = now.getUTCHours() + 8  + ':' + //Conversion to EDT time
+      now.getUTCMinutes() + ':' +
       now.getUTCSeconds();
     
     return date + ' ' + time;

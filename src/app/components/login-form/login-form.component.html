@@ -1,27 +1,27 @@
 <div class="container">
     <div class="loginCard">
       <form #signupForm="ngForm">
-        <h2 class="heading">Log In</h2>
+        <h2 class="heading">Connexion</h2>
 
-        <label class="label" id="email-label">Email</label>
+        <label class="label" id="email-label">Courriel</label>
           <input 
             [(ngModel)]="email"
             type="email" 
             name="email" 
-            placeholder="Enter your email address" 
+            placeholder="Entrer votre adresse courriel" 
             class="formInput" />
           
-        <label class="label" id="password-label">Password</label>
+        <label class="label" id="password-label">Mot de passe</label>
           <input type="password" 
             [(ngModel)]="password"
             name="password" 
-            placeholder="Enter your password"
+            placeholder="Entrer votre mot de passe"
             class="formInput" />
 
           <button class="btn" 
                   id="btn-login" 
                   (click)="login()">
-                  Log In
+                  Se connecter
           </button>
       </form>
     </div>
