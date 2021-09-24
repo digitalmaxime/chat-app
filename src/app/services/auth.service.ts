@@ -4,6 +4,7 @@ import { AngularFireDatabase } from '@angular/fire/database';
 import * as firebase from 'firebase';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { DataSnapshot } from '@angular/fire/database/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -16,12 +17,9 @@ export class AuthService {
   constructor(private afAuth: AngularFireAuth, private db: AngularFireDatabase, private router: Router) {
     this.user = afAuth.authState;
     this.authState = this.user;
-    console.log(this.user);
-    console.log(this.authState);
    }
   
   get currentUserId(): string {
-    console.log(this.authState);
     return this.authState !== null ? this.authState.uid : '';
   }
 
@@ -49,11 +47,18 @@ export class AuthService {
     return this.afAuth.createUserWithEmailAndPassword(email, password)
       .then(user => {
         this.authState = user.user; //DIFFERENCE AVEC LE TUTORIEL
-        console.log(user);
-        console.log(this.authState);
         const status = 'online';
         this.setUserData(email, displayName, status);
-      }).catch(error => console.log(error));
+      }).catch(error => {
+        switch(error.code) {
+          case 'auth/email-already-in-use': 
+            throw new Error('Ce courriel est déjà utilisé.')
+          case 'auth/invalid-email':
+            throw new Error('Cette adresse courriel est invalide.')
+          case 'auth/weak-password':
+            throw new Error('Ce mot de passe est trop faible. Veuillez choisir un mot de passe ayant minimum 6 caractères.')
+        }
+      });
   }
 
   setUserData(email: string, displayName: string, status: string): void {
@@ -76,5 +81,14 @@ export class AuthService {
     let db = firebase.database();
     db.ref(path).update(data)
       .catch(error => console.log(error));
+  }
+
+  userNameExists(userName: string): Promise<DataSnapshot> {
+    let db = firebase.database();
+    const path = `users`;
+    return db.ref(path).orderByChild('userName').equalTo(userName).once("value", snapshot => {
+      return snapshot.exists();
+    }); 
+
   }
 }

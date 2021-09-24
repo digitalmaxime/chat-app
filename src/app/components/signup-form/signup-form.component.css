@@ -72,3 +72,11 @@ a {
 .label{
     font-size: 0.9em;
 }
+
+#warningMsg{
+    font-weight: bold;
+}
+
+#errorMsg {
+    color: red;
+}

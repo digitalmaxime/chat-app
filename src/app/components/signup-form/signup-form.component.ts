@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { DataSnapshot } from '@angular/fire/database/interfaces';
+import { Data, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-signup-form',
@@ -11,16 +12,26 @@ export class SignupFormComponent {
   password: string;
   displayName: string;
   errorMsg: string;
+  warningMsg: string;
 
   constructor(private authService: AuthService, private router: Router) {}
 
   signUp() { 
-    const email = this.email;
-    const password = this.password;
-    const displayName = this.displayName;
-    this.authService.signUp(email, password, displayName)
-      .then(resolve => this.router.navigate(['chat']))
-      .catch(error => this.errorMsg = error.message)
+    this.authService.userNameExists(this.displayName).then((userExists: DataSnapshot) => {
+      if(userExists.exists()) {
+        this.warningMsg = "Désolé, ce nom d'utilisateur existe déjà."
+      } else {
+        this.errorMsg = '';
+        const email = this.email;
+        const password = this.password;
+        const displayName = this.displayName;
+        this.authService.signUp(email, password, displayName)
+          .then(resolve => this.router.navigate(['chat']))
+          .catch(error => {
+            this.errorMsg = error.message
+          })
+      }
+    })
   }
 
 }

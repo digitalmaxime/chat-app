@@ -12,11 +12,16 @@ export class LoginFormComponent {
   password: string;
   errorMsg: string;
 
-  constructor(private authService: AuthService, private router: Router) { }
-
+  constructor(private authService: AuthService, private router: Router) { 
+    this.errorMsg = '';
+  }
+  
   login() {
     this.authService.login(this.email, this.password)
-    .catch(error => this.errorMsg = error.message);
+    .then(() => this.errorMsg = '')
+    .catch(error => {
+      this.errorMsg = 'Le mot de passe ou courriel entré est invalide.'
+    });
   }
 
 }

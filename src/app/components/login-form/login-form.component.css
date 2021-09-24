@@ -88,3 +88,7 @@ label{
 #password-label {
     margin-right: 310px;
 }
+
+#errorMsg {
+    color: red;
+}

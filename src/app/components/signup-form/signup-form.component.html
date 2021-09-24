@@ -23,7 +23,8 @@
           placeholder="Entrer un nom d'utilisateur" 
           [(ngModel)]="displayName" class="formInput"
           maxlength="12" required/>
-  
+      <label id="errorMsg">{{errorMsg}}</label>
+      <label id="warningMsg">{{warningMsg}}</label>
         <button [disabled]="!signupForm.form.valid" 
                 type="submit" (click)="signUp()"
                 class="btn" id="btn-signUp">
