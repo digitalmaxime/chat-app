@@ -20,8 +20,10 @@ export class ChatFormComponent {
   }
 
   send(): void {
-    this.chatService.sendMessage(this.message);
-    this.message = '';
+    if(!this.message === null || this.message.match(/^ *$/) == null) {
+      this.chatService.sendMessage(this.message);
+      this.message = '';
+    }
   }
 
 }
